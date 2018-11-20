@@ -6,10 +6,11 @@ Learn more at: <https://github.com/Kong/kubernetes-ingress-controller>
 
 ## Docker Pull Command
 
-`docker pull siriuszg/kong-ingress-controller:0.1.0`
+`docker pull siriuszg/kong-ingress-controller:TAG`
 
 ## TAG
 
-* 0.2.1, latest
+* 0.2.2, latest
+* 0.2.1
 * 0.2.0
 * 0.1.0

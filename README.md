@@ -10,7 +10,8 @@ Learn more at: <https://github.com/Kong/kubernetes-ingress-controller>
 
 ## TAG
 
-* 0.8.1, latest
+* 0.9.0, latest
+* 0.8.1
 * 0.8.0
 * 0.7.1
 * 0.7.0

@@ -1,0 +1,57 @@
+name: auto sync release
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  '0 8 * * *'
+  push:
+    paths:
+      - '.github/workflows/*.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Get Release Version
+        id: get-version
+        run: |
+          git fetch --tags
+          export CURRENT=$(cat Dockerfile | sed -n "/kong-ingress-controller/s/.*\/kong-ingress-controller.\(.*\)/\1/p")
+          export LATEST=$(curl -sI https://github.com/Kong/kubernetes-ingress-controller/releases/latest | sed -n '/tag/s/.*tag\/\(.*\)./\1/p')
+          if [ "$LATEST" != "" ] && [ "$LATEST" != "$CURRENT" ]; then
+            echo "current version: $CURRENT; found new release version: $LATEST"
+            echo "::set-output name=current::$CURRENT"
+            echo "::set-output name=latest::$LATEST"
+          else
+            echo "current version: $CURRENT; not found new release version"
+            echo "::set-output name=latest::0"
+          fi
+      - name: Update Version
+        if: success() && steps.get-version.outputs.latest != 0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CURRENT: ${{ steps.get-version.outputs.current }}
+          LATEST: ${{ steps.get-version.outputs.latest }}
+        run: |
+          echo "Update Version From $CURRENT To $LATEST"
+          sed -i "s/$CURRENT/$LATEST/g" Dockerfile
+          sed -i "s/$CURRENT/$LATEST/g;/$LATEST/a\  * $CURRENT" README.md
+          git config user.email zhigang52110@sina.com
+          git config user.name zhigang
+          git commit -a -m "update version to $LATEST"
+          git push
+      - name: Create New Release
+        uses: actions/create-release@v1
+        if: success() && steps.get-version.outputs.latest != 0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LATEST: ${{ steps.get-version.outputs.latest }}
+        with:
+          tag_name: ${{ env.LATEST }}
+          release_name: ${{ env.LATEST }}
+          body: |
+            version ${{ env.LATEST }}
+          draft: false
+          prerelease: false

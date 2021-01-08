@@ -19,13 +19,14 @@ jobs:
         run: |
           git fetch --tags
           export CURRENT=$(cat Dockerfile | sed -n "/kong-ingress-controller/s/.*\/kong-ingress-controller.\(.*\)/\1/p")
-          export LATEST=$(curl -sI https://github.com/Kong/kubernetes-ingress-controller/releases/latest | sed -n '/tag/s/.*tag\/\(.*\)./\1/p')
+          export LATEST=$(curl -sI https://github.com/Kong/kubernetes-ingress-controller/releases/latest | sed -n '/tag/s/.*tag\/\(.*\)./\1/p' | sed 's/^v//g')
+          echo "current version: $CURRENT; latest release version: $LATEST"
           if [ "$LATEST" != "" ] && [ "$LATEST" != "$CURRENT" ]; then
-            echo "current version: $CURRENT; found new release version: $LATEST"
+            echo "found new release version"
             echo "::set-output name=current::$CURRENT"
             echo "::set-output name=latest::$LATEST"
           else
-            echo "current version: $CURRENT; not found new release version"
+            echo "new release version not found"
             echo "::set-output name=latest::0"
           fi
       - name: Update Version
@@ -37,7 +38,7 @@ jobs:
         run: |
           echo "Update Version From $CURRENT To $LATEST"
           sed -i "s/$CURRENT/$LATEST/g" Dockerfile
-          sed -i "s/$CURRENT/$LATEST/g;/$LATEST/a\  * $CURRENT" README.md
+          sed -i "s/$CURRENT/$LATEST/g;/$LATEST/a\* $CURRENT" README.md
           git config user.email zhigang52110@sina.com
           git config user.name zhigang
           git commit -a -m "update version to $LATEST"

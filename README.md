@@ -8,25 +8,26 @@ Learn more at: <https://github.com/Kong/kubernetes-ingress-controller>
 
 `docker pull siriuszg/kong-ingress-controller:TAG`
 
-## TAG
+## Docker Tag
 
-* 1.1.1, latest
-* 1.1.0
-* 1.0.0
-* 0.10.0
-* 0.9.1
-* 0.9.0
-* 0.8.1
-* 0.8.0
-* 0.7.1
-* 0.7.0
-* 0.6.2
-* 0.6.1
-* 0.6.0
-* 0.5.0
-* 0.4.0
-* 0.3.0
-* 0.2.2
-* 0.2.1
-* 0.2.0
-* 0.1.0
+* base image from kong-docker-kubernetes-ingress-controller.bintray.io/kong-ingress-controller
+  * 1.1.1, latest
+  * 1.1.0
+  * 1.0.0
+  * 0.10.0
+  * 0.9.1
+  * 0.9.0
+  * 0.8.1
+  * 0.8.0
+  * 0.7.1
+  * 0.7.0
+  * 0.6.2
+  * 0.6.1
+  * 0.6.0
+  * 0.5.0
+  * 0.4.0
+  * 0.3.0
+  * 0.2.2
+  * 0.2.1
+  * 0.2.0
+  * 0.1.0

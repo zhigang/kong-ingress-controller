@@ -11,7 +11,8 @@ Learn more at: <https://github.com/Kong/kubernetes-ingress-controller>
 ## Docker Tag
 
 * base image from kong-docker-kubernetes-ingress-controller.bintray.io/kong-ingress-controller
-  * 1.1.1, latest
+  * 1.2.0, latest
+  * 1.1.1
   * 1.1.0
   * 1.0.0
   * 0.10.0

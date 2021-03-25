@@ -42,7 +42,8 @@ jobs:
           git config user.email zhigang52110@sina.com
           git config user.name zhigang
           git commit -a -m "update version to $LATEST"
-          git push
+          git tag -a $LATEST -m "$LATEST"
+          git push --follow-tags
       - name: Create New Release
         uses: actions/create-release@v1
         if: success() && steps.get-version.outputs.latest != 0

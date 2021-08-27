@@ -18,7 +18,7 @@ jobs:
         id: get-version
         run: |
           git fetch --tags
-          export CURRENT=$(cat Dockerfile | sed -n "/kong-ingress-controller/s/.*\/kong-ingress-controller.\(.*\)/\1/p")
+          export CURRENT=$(cat Dockerfile | sed -n "/kubernetes-ingress-controller/s/.*\/kubernetes-ingress-controller.\(.*\)/\1/p")
           export LATEST=$(curl -sI https://github.com/Kong/kubernetes-ingress-controller/releases/latest | sed -n '/tag/s/.*tag\/\(.*\)./\1/p' | sed 's/^v//g')
           echo "current version: $CURRENT; latest release version: $LATEST"
           if [ "$LATEST" != "" ] && [ "$LATEST" != "$CURRENT" ]; then

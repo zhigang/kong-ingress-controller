@@ -71,4 +71,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: siriuszg/kong-ingress-controller:${{ env.LATEST }}
+          tags: siriuszg/kong-ingress-controller:${{ env.LATEST }},siriuszg/kong-ingress-controller:latest

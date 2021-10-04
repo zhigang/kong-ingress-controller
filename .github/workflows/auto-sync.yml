@@ -37,7 +37,7 @@ jobs:
           LATEST: ${{ steps.get-version.outputs.latest }}
         run: |
           echo "Update Version From $CURRENT To $LATEST"
-          sed -i "s/$CURRENT/$LATEST/g" Dockerfile
+          sed -i "s/$CURRENT/$LATEST-alpine/g" Dockerfile
           sed -i "s/$CURRENT/$LATEST/g;/$LATEST/a\  * $CURRENT" README.md
           git config user.email zhigang52110@sina.com
           git config user.name zhigang

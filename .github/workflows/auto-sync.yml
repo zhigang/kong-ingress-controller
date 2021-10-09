@@ -20,9 +20,6 @@ jobs:
           git fetch --tags
           export CURRENT=$(cat Dockerfile | sed -n "/kubernetes-ingress-controller/s/.*\/kubernetes-ingress-controller.\(.*\)/\1/p")
           export LATEST=$(curl -sI https://github.com/Kong/kubernetes-ingress-controller/releases/latest | sed -n '/tag/s/.*tag\/\(.*\)./\1/p' | sed 's/^v//g')
-          if [[ "$CURRENT" != "" ]] && [[ "$CURRENT" =~ "-alpine" ]]; then
-            CURRENT=$(echo $CURRENT | sed -e 's/-alpine//g')
-          fi
           echo "current version: $CURRENT; latest release version: $LATEST"
           if [ "$LATEST" != "" ] && [ "$LATEST" != "$CURRENT" ]; then
             echo "found new release version"
@@ -40,7 +37,7 @@ jobs:
           LATEST: ${{ steps.get-version.outputs.latest }}
         run: |
           echo "Update Version From $CURRENT To $LATEST"
-          sed -i "s/$CURRENT/$LATEST-alpine/g" Dockerfile
+          sed -i "s/$CURRENT/$LATEST/g" Dockerfile
           sed -i "s/$CURRENT/$LATEST/g;/$LATEST/a\  * $CURRENT" README.md
           git config user.email zhigang52110@sina.com
           git config user.name zhigang

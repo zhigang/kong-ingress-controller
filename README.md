@@ -14,6 +14,8 @@ Learn more at: <https://github.com/Kong/kubernetes-ingress-controller>
   * latest
   * 2.0.0
   * 1.3.3
+  * 2.0.0
+  * 1.3.3
   * 1.3.2
   * 1.3.0
 * base image from kong-docker-kubernetes-ingress-controller.bintray.io/kong-ingress-controller

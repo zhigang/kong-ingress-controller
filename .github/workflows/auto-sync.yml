@@ -1,4 +1,4 @@
-name: auto sync release
+name: auto sync version
 
 on:
   workflow_dispatch:
@@ -6,14 +6,16 @@ on:
     - cron:  '0 16 * * *'
   push:
     paths:
-      - '.github/workflows/*.yml'
+      - '.github/workflows/auto-sync.yml'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PAT }}
       - name: Get Release Version
         id: get-version
         run: |
@@ -44,31 +46,3 @@ jobs:
           git commit -a -m "update version to $LATEST"
           git tag -a $LATEST -m "$LATEST"
           git push --follow-tags
-      - name: Create New Release
-        uses: actions/create-release@v1
-        if: success() && steps.get-version.outputs.latest != 0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LATEST: ${{ steps.get-version.outputs.latest }}
-        with:
-          tag_name: ${{ env.LATEST }}
-          release_name: ${{ env.LATEST }}
-          body: |
-            version ${{ env.LATEST }}
-          draft: false
-          prerelease: false
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v1
-        if: success() && steps.get-version.outputs.latest != 0
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Push to Docker Hub
-        uses: docker/build-push-action@v2
-        if: success() && steps.get-version.outputs.latest != 0
-        env:
-          LATEST: ${{ steps.get-version.outputs.latest }}
-        with:
-          context: .
-          push: true
-          tags: siriuszg/kong-ingress-controller:${{ env.LATEST }},siriuszg/kong-ingress-controller:latest

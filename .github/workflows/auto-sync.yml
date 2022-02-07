@@ -3,13 +3,13 @@ name: auto sync version
 on:
   workflow_dispatch:
   schedule:
-    - cron:  '0 16 * * *'
+    - cron: "0 16 * * *"
   push:
     paths:
-      - '.github/workflows/auto-sync.yml'
+      - ".github/workflows/auto-sync.yml"
 
 jobs:
-  build:
+  sync:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

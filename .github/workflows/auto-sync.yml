@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "0 16 * * *"
-  push:
-    paths:
-      - ".github/workflows/auto-sync.yml"
+#   push:
+#     paths:
+#       - ".github/workflows/auto-sync.yml"
 
 jobs:
   sync:

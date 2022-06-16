@@ -1,4 +1,4 @@
 #For don't connect to kong-docker-kubernetes-ingress-controller.bintray.io in china.
-FROM kong/kubernetes-ingress-controller:2.3.1
+FROM kong/kubernetes-ingress-controller:2.4.0
 
 LABEL maintainer="siriuszg<zhigang52110@sina.com>"

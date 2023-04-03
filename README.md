@@ -12,6 +12,7 @@ Learn more at: <https://github.com/Kong/kubernetes-ingress-controller>
 
 * new release version is available on [kong/kubernetes-ingress-controller](https://hub.docker.com/r/kong/kubernetes-ingress-controller/)
   * latest
+  * 2.9.2
   * 2.8.2
   * 2.9.1
   * 2.9.0

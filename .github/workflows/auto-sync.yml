@@ -25,11 +25,11 @@ jobs:
           echo "current version: $CURRENT; latest release version: $LATEST"
           if [ "$LATEST" != "" ] && [ "$LATEST" != "$CURRENT" ]; then
             echo "found new release version"
-            echo "::set-output name=current::$CURRENT"
-            echo "::set-output name=latest::$LATEST"
+            echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
+            echo "latest=$LATEST" >> "$GITHUB_OUTPUT"
           else
             echo "new release version not found"
-            echo "::set-output name=latest::0"
+            echo "latest=0" >> "$GITHUB_OUTPUT"
           fi
       - name: Update Version
         if: success() && steps.get-version.outputs.latest != 0

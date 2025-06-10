@@ -9,20 +9,18 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    env:
+      RELEASE_VERSION: ${{ github.ref_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Get Release Version
-        id: get-version
-        run: echo "tag=${GITHUB_REF#refs/*/}" >> "$GITHUB_OUTPUT"
       - name: Create Release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_VERSION: ${{ steps.get-version.outputs.tag }}
         with:
           tag_name: ${{ env.RELEASE_VERSION }}
-          release_name: ${{ env.RELEASE_VERSION }}
+          name: ${{ env.RELEASE_VERSION }}
           body: |
             version ${{ env.RELEASE_VERSION }}
           draft: false
@@ -36,8 +34,6 @@ jobs:
       - name: Push to Docker Hub
         uses: docker/build-push-action@v2
         if: success()
-        env:
-          RELEASE_VERSION: ${{ steps.get-version.outputs.tag }}
         with:
           context: .
           push: true

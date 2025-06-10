@@ -13,7 +13,7 @@ jobs:
       RELEASE_VERSION: ${{ github.ref_name }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Create Release
         uses: softprops/action-gh-release@v2
         env:
@@ -31,10 +31,15 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
       - name: Push to Docker Hub
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v6
         if: success()
         with:
+          platforms: linux/amd64,linux/arm64
           context: .
           push: true
           tags: siriuszg/kong-ingress-controller:${{ env.RELEASE_VERSION }},siriuszg/kong-ingress-controller:latest

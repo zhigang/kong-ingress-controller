@@ -11,7 +11,8 @@ Learn more at: <https://github.com/Kong/kubernetes-ingress-controller>
 ## Docker Tag
 
 * new release version is available on [kong/kubernetes-ingress-controller](https://hub.docker.com/r/kong/kubernetes-ingress-controller/)
-  * 3.5.14, latest
+  * 3.5.15, latest
+  * 3.5.14
   * 3.5.13
   * 3.5.12
   * 3.5.11
